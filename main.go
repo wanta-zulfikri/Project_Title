@@ -21,6 +21,7 @@ func main() {
 	db, _ := config.GetConnection(*cfg) 
 	config.Migrate(db)
 
+
 	userModel := userRepo.New(db)
 	userServices := userLogic.New(userModel)
 	userController := userHandler.New(userServices)  
@@ -34,4 +35,5 @@ func main() {
 	routes.Route(e, userController , bookController) 
 
 	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", cfg.Port)))
-}
+} 
+

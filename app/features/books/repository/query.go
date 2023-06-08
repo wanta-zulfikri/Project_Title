@@ -20,7 +20,7 @@ func (er *BooksRepository) CreateBook(book books.Core, userID uint) error {
 	var err error 
 	tx := er.db.Begin()
 
-	newBook := Books {
+	newBook := Book {
 	Title         :  book.Title,
 	PublishedYear : book.PublishedYear,
 	ISBN          : book.ISBN,
@@ -52,7 +52,7 @@ func (er *BooksRepository) GetBooksByUserID(userid uint) ([]books.Core, error) {
 } 
 
 func (er *BooksRepository) GetBook(bookid uint) (books.Core, error) {
-	var input Books
+	var input Book
 	result := er.db.Where("id = ? AND deleted_at IS NULL", bookid).Find(&input)
 	if result.Error != nil {
 		return books.Core{}, result.Error	
@@ -69,7 +69,7 @@ func (er *BooksRepository) GetBook(bookid uint) (books.Core, error) {
 }
 
 func (er *BooksRepository) UpdateBook(id uint, updatedBook books.Core) error {
-	if err := er.db.Model(&Books{}).Where("id = ?", id).Updates(map[string]interface{}{
+	if err := er.db.Model(&Book{}).Where("id = ?", id).Updates(map[string]interface{}{
 		"title"			    : updatedBook.Title, 
 		"publishedyear"		: updatedBook.PublishedYear,
 		"isbn"			    : updatedBook.ISBN,
@@ -84,7 +84,7 @@ func (er *BooksRepository) UpdateBook(id uint, updatedBook books.Core) error {
 } 
 
 func (er *BooksRepository) DeleteBook(id uint) error {
-	input := Books{}
+	input := Book{}
 	if err := er.db.Where("id = ?", id).Find(&input).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return err
