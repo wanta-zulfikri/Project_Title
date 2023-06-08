@@ -3,7 +3,7 @@ package handler
 import (
 	"Project_Title/app/features/users"
 	"Project_Title/helper" 
-	"Project_Title/middlewares" 
+	"Project_Title/middleware" 
 	"net/http" 
 
 	"github.com/labstack/echo/v4"
@@ -47,7 +47,7 @@ func (uc *UserController) Login() echo.HandlerFunc {
 						return c.JSON(http.StatusInternalServerError, helper.ResponseFormat(http.StatusInternalServerError, "Internal Server Error", nil))
 				}
 
-				token, err := middlewares.CreateJWT(user.ID,user.Email, user.Name)
+				token, err := middleware.CreateJWT(user.ID,user.Email, user.Name)
 				if err != nil {
 						c.Logger().Error(err.Error())
 						return c.JSON(http.StatusInternalServerError, helper.ResponseFormat(http.StatusInternalServerError, "internal Server Error", nil ))
@@ -64,7 +64,7 @@ func (uc *UserController) Login() echo.HandlerFunc {
 func (uc *UserController) GetProfile() echo.HandlerFunc {
 		return func(c echo.Context) error {
 			tokenString := c.Request().Header.Get("Authorization")
-			claims, err := middlewares.ValidateJWT2(tokenString)
+			claims, err := middleware.ValidateJWT2(tokenString)
 			if err != nil {
 				c.Logger().Error(err.Error())
 				return c.JSON(http.StatusUnauthorized, helper.ResponseFormat(http.StatusUnauthorized, "Missing or Malformed JWT."+err.Error(), nil))
@@ -90,7 +90,7 @@ func (uc *UserController) UpdateProfile() echo.HandlerFunc {
 		return func(c echo.Context) error {
 			var input UpdateInput 
 			tokenString := c.Request().Header.Get("Authorization") 
-			claims, err := middlewares.ValidateJWT2(tokenString)
+			claims, err := middleware.ValidateJWT2(tokenString)
 			if err != nil {
 					c.Logger().Error(err.Error())
 					return c.JSON(http.StatusUnauthorized, helper.ResponseFormat(http.StatusUnauthorized, "Missing or Malformed JWT."+err.Error(), nil))
@@ -135,7 +135,7 @@ func (uc *UserController) UpdateProfile() echo.HandlerFunc {
 func (uc *UserController) DeleteProfile() echo.HandlerFunc {
 		return func(c echo.Context) error {
 			tokenString := c.Request().Header.Get("Authorization")
-			claims, err := middlewares.ValidateJWT2(tokenString)
+			claims, err := middleware.ValidateJWT2(tokenString)
 			if err != nil {
 				c.Logger().Error(err.Error())
 				return c.JSON(http.StatusUnauthorized, helper.ResponseFormat(http.StatusInternalServerError, "Internal Server Error", nil))

@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"Project_Title/middlewares"
+	"Project_Title/middleware"
 
 	"github.com/labstack/echo/v4"
 )
@@ -25,7 +25,7 @@ func (ec *BookController) CreateBook() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		var input RequestCreateBook
 		tokenString := c.Request().Header.Get("Authorization")
-		claims, err := middlewares.ValidateJWT2(tokenString)
+		claims, err := middleware.ValidateJWT2(tokenString)
 		if err != nil {
 			return c.JSON(http.StatusUnauthorized, helper.ResponseFormat(http.StatusUnauthorized, "Missing or Malformed JWT"+err.Error(), nil))
 		}
@@ -137,7 +137,7 @@ func (ec *BookController) GetBooks() echo.HandlerFunc {
 func (ec *BookController) GetBooksByUserID() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		tokenString := c.Request().Header.Get("Authorization")
-		claims, err := middlewares.ValidateJWT2(tokenString)
+		claims, err := middleware.ValidateJWT2(tokenString)
 		if err != nil {
 			return c.JSON(http.StatusUnauthorized, helper.ResponseFormat(http.StatusUnauthorized, "Missing or Malformed JWT. "+err.Error(), nil))
 		}
@@ -236,7 +236,7 @@ func (ec *BookController) UpdateBook() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		var input RequestUpdateBook
 		tokenString := c.Request().Header.Get("Authorization")
-		claims, err := middlewares.ValidateJWT2(tokenString)
+		claims, err := middleware.ValidateJWT2(tokenString)
 		if err != nil {
 			return c.JSON(http.StatusUnauthorized, helper.ResponseFormat(http.StatusUnauthorized, "Missing or Malformed JWT. "+err.Error(), nil))
 		}
@@ -292,7 +292,7 @@ func (ec *BookController) UpdateBook() echo.HandlerFunc {
 func (ec *BookController) DeleteBook() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		tokenString := c.Request().Header.Get("Authorization")
-		claims, err := middlewares.ValidateJWT2(tokenString)
+		claims, err := middleware.ValidateJWT2(tokenString)
 		if err != nil {
 			return c.JSON(http.StatusUnauthorized, helper.ResponseFormat(http.StatusUnauthorized, "Missing or Malformed JWT"+err.Error(), nil))
 		}

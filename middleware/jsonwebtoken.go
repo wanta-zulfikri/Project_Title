@@ -1,4 +1,4 @@
-package middlewares 
+package middleware
 
 import (
 	"fmt"
@@ -21,7 +21,7 @@ func CreateJWT(id uint, email, name string) (string, error) {
 	if err != nil {
 			return "", err 
 	}
-	return signedToken, nil 
+	return signedToken, nil
 }
 
 func ValidateJWT(authHeader string) (uint, error) {
