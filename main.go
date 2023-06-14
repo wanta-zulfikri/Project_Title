@@ -24,15 +24,15 @@ func main() {
 
 	userModel := userRepo.New(db)
 	userServices := userLogic.New(userModel)
-	userController := userHandler.New(userServices)  
+	userController := userHandler.New(userServices, cfg)  
 
 	bookModel := bookRepo.New(db) 
 	bookServices := bookLogic.New(bookModel)
-	bookController := bookHandler.New(bookServices)
+	bookController := bookHandler.New(bookServices, config.GetConfiguration())
 
 	
 
-	routes.Route(e, userController , bookController) 
+	routes.Route(e, userController , bookController, cfg) 
 
 	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", cfg.Port)))
 } 

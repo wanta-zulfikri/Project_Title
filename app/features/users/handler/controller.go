@@ -1,21 +1,23 @@
-package handler 
+package handler
 
 import (
 	"Project_Title/app/features/users"
-	"Project_Title/helper" 
-	"Project_Title/middleware" 
-	"net/http" 
+	"Project_Title/config"
+	"Project_Title/helper"
+	"Project_Title/middleware"
+	"net/http"
 
-	"github.com/labstack/echo/v4"
 	"github.com/jinzhu/copier"
+	"github.com/labstack/echo/v4"
 )
 
 type UserController struct {
-	s users.Service
+	s users.Service 
+	c *config.Configuration
 }
 
-func New(h users.Service) users.Handler {
-		return &UserController{s : h}
+func New(h users.Service, c *config.Configuration) users.Handler {
+		return &UserController{s : h, c: c}
 } 
 
 func (uc *UserController) Register() echo.HandlerFunc {

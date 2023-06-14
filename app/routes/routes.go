@@ -10,7 +10,7 @@ import (
 ) 
 
 
-func Route(e *echo.Echo, uc users.Handler , ec books.Handler) {
+func Route(e *echo.Echo, uc users.Handler , ec books.Handler, config *config.Configuration) {
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.CORS())
 	e.Use(middleware.Logger()) 
@@ -20,14 +20,14 @@ func Route(e *echo.Echo, uc users.Handler , ec books.Handler) {
 	e.POST("/login", uc.Login()) 
 	
 	//users 
-	e.GET("/users", uc.GetProfile(), middleware.JWT([]byte(config.JWTKey)))
-	e.PUT("/users", uc.GetProfile(), middleware.JWT([]byte(config.JWTKey)))
-	e.DELETE("/users", uc.DeleteProfile(), middleware.JWT([]byte(config.JWTKey))) 
+	e.GET("/users", uc.GetProfile())
+	e.PUT("/users", uc.GetProfile())
+	e.DELETE("/users", uc.DeleteProfile()) 
 
 	//books 
-	e.GET("/books", ec.GetBooks(), middleware.JWT([]byte(config.JWTKey))) 
-	e.POST("/books", ec.CreateBook(), middleware.JWT([]byte(config.JWTKey))) 
-	e.GET("/books/:id", ec.GetBook(), middleware.JWT([]byte(config.JWTKey))) 
-	e.PUT("/books/:id", ec.UpdateBook(), middleware.JWT([]byte(config.JWTKey)))
-	e.DELETE("/books/:id", ec.DeleteBook(), middleware.JWT([]byte(config.JWTKey)))
+	e.GET("/books", ec.GetBooks()) 
+	e.POST("/books", ec.CreateBook()) 
+	e.GET("/books/:id", ec.GetBook()) 
+	e.PUT("/books/:id", ec.UpdateBook())
+	e.DELETE("/books/:id", ec.DeleteBook())
 }

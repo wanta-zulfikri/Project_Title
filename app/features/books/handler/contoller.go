@@ -2,6 +2,7 @@ package handler
 
 import (
 	"Project_Title/app/features/books"
+	"Project_Title/config"
 	"Project_Title/helper"
 	"math"
 	"net/http"
@@ -14,10 +15,11 @@ import (
 
 type BookController struct {
 	s books.Service
+	config *config.Configuration
 } 
 
-func New(h books.Service) books.Handler {
-	return &BookController{s: h}
+func New(h books.Service, c *config.Configuration) books.Handler {
+	return &BookController{s: h, config: c}
 }
 
 
@@ -247,18 +249,19 @@ func (ec *BookController) UpdateBook() echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, helper.ResponseFormat(http.StatusBadRequest, "Bad Request", nil))
 		}
 
-		// file, err := c.FormFile("event_picture")
-		// var event_picture string
-		// if err != nil && err != http.ErrMissingFile {
-		// 	c.Logger().Error("Failed to get event_picture from form file: ", err)
-		// 	return c.JSON(http.StatusBadRequest, helper.ResponseFormat(http.StatusBadRequest, "Bad Request", nil))
-		// } else if file != nil {
-		// 	event_picture, err = helper.UploadImage(c, file)
-		// 	if err != nil {
-		// 		c.Logger().Error("Failed to upload event_picture: ", err)
-		// 		return c.JSON(http.StatusInternalServerError, helper.ResponseFormat(http.StatusInternalServerError, "Internal Server Error", nil))
-		// 	}
-		// }
+		file, err := c.FormFile("book")
+		var picture string
+		if err != nil && err != http.ErrMissingFile {
+			c.Logger().Error("Failed to get picture from form file: ", err)
+			return c.JSON(http.StatusBadRequest, helper.ResponseFormat(http.StatusBadRequest, "Bad Request", nil))
+		} else if file != nil {
+			res_picture, err := helper.Upload(c, ec.config.Database.ACCESS_KEY_ID, ec.config.Database.ACCESS_KEY_SECRET)
+			if err != nil {
+				c.Logger().Error("Failed to upload picture: ", err)
+				return c.JSON(http.StatusInternalServerError, helper.ResponseFormat(http.StatusInternalServerError, "Internal Server Error", nil))
+			} 
+			picture = res_picture
+		}
 
 		updatedBook := books.Core{
 			ID:            uint(id), 
