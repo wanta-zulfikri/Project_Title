@@ -29,6 +29,7 @@ func (us *UserService) Register(newUser users.Core) error {
 func (us *UserService) Login(email string, password string) (users.Core, error) {
 	user, err := us.m.Login(email, password)
 	if err != nil {
+	log.Println(err)
 		return users.Core{},err
 	}
 	return user, nil

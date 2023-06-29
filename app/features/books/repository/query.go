@@ -21,9 +21,10 @@ func (er *BooksRepository) CreateBook(book books.Core, userID uint) error {
 	tx := er.db.Begin()
 
 	newBook := Book {
-	Title         :  book.Title,
+	Title         : book.Title,
 	PublishedYear : book.PublishedYear,
 	ISBN          : book.ISBN,
+	Image		  : book.Image ,
 
 	}
 	err = tx.Table("books").Create(&newBook).Error 
@@ -64,6 +65,7 @@ func (er *BooksRepository) GetBook(bookid uint) (books.Core, error) {
 			Title: input.Title,
 			PublishedYear: input.PublishedYear,
 			ISBN: input.ISBN,
+			Image: input.Image,
 			
 		}, nil
 }
@@ -73,7 +75,10 @@ func (er *BooksRepository) UpdateBook(id uint, updatedBook books.Core) error {
 		"title"			    : updatedBook.Title, 
 		"publishedyear"		: updatedBook.PublishedYear,
 		"isbn"			    : updatedBook.ISBN,
+		"image"				: updatedBook.Image,
 		"updated_at"        : time.Now(),
+
+
 	}).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return err 

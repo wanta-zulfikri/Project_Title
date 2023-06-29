@@ -42,14 +42,16 @@ func (ar *UserRepository) Register(newUser users.Core)  (users.Core, error) {
 
 func (ar *UserRepository) Login(email, password string) (users.Core, error) {
 		var input User 
-		if err := ar.db.Where("email = ?", email).Find(&input).Error; err != nil {
+		if err := ar.db.Where("email = ?", email).Find(&input).Error; err != nil { 
+				log.Println(err)
 				return users.Core{}, errors.New("Email not found")
 		}
-
+		fmt.Println(input.Password,password)
 		if err := helper.VerifyPassword(input.Password, password); err != nil {
+				log.Println(err)
 				return users.Core{}, errors.New("Invalid password")
 		}
-
+		
 		return users.Core{ID: input.ID, Email: input.Email, Name: input.Name}, nil  
 } 
 

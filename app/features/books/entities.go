@@ -9,6 +9,7 @@ type Core struct {
 	Title         string 
 	PublishedYear string 
 	ISBN          string 
+	Image         string 
 	BookAuthors   []Book_Authorscore `gorm:"many2many:book_authors"`
 } 
 

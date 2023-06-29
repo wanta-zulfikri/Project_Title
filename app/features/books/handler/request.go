@@ -2,13 +2,15 @@ package handler
 
 type RequestCreateBook struct {
 	Title         string `json:"title"`
-	PublishedYear string `from:"publishedyear"`
-	ISBN          string `from:"isbn"`
+	PublishedYear string `json:"publishedyear"`
+	ISBN          string `json:"isbn"` 
+	Image         string `json:"image"`
 } 
 
 type RequestUpdateBook struct {
-	Title         string `from:"title"`
-	PublishedYear string `from:"publishedyear"`
-	ISBN          string `from:"isbn"`
+	Title         string `json:"title"`
+	PublishedYear string `json:"publishedyear"`
+	ISBN          string `json:"isbn"`
+	Image         string `json:"image"`
 } 
 

@@ -1,15 +1,17 @@
 package handler
 
 type ResponseGetBooks struct {
-	Title         string `from:"title"`
-	PublishedYear string `from:"publishedyear"`
-	ISBN          string `from:"isbn"`
+	Title         string `json:"title"`
+	PublishedYear string `json:"publishedyear"`
+	ISBN          string `json:"isbn"` 
+	Image         string `json:"image"`
 } 
 
 type ResponseGetBook struct {
-	Title         string `from:"title"`
-	PublishedYear string `from:"publishedyear"`
-	ISBN          string `from:"isbn"`
+	Title         string `json:"title"`
+	PublishedYear string `json:"publishedyear"`
+	ISBN          string `json:"isbn"` 
+	Image         string `json:"image"`
 } 
 
 
@@ -20,9 +22,10 @@ type BookResponse struct {
 }
 
 type BookData struct {
-	Title         string `from:"title"`
-	PublishedYear string `from:"publishedyear"`
-	ISBN          string `from:"isbn"`
+	Title         string `json:"title"`
+	PublishedYear string `json:"publishedyear"`
+	ISBN          string `json:"isbn"` 
+	Image         string `json:"image"`
 }
 
 
@@ -42,7 +45,8 @@ type Pagination struct {
 }
 
 type ResponseUpdateBooks struct {
-	Title         string `from:"title"`
-	PublishedYear string `from:"publishedyear"`
-	ISBN          string `from:"isbn"`
+	Title         string `json:"title"`
+	PublishedYear string `json:"publishedyear"`
+	ISBN          string `json:"isbn"` 
+	Image         string `json:"image"`
 }

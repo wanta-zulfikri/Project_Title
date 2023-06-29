@@ -38,12 +38,27 @@ func (ec *BookController) CreateBook() echo.HandlerFunc {
 			c.Logger().Error("Failed to bind input: ", err)
 			return c.JSON(http.StatusBadRequest, helper.ResponseFormat(http.StatusBadRequest, "Bad Request", nil))
 		} 
+
+		var picture string
+		file, err := c.FormFile("book")
+		if err != nil && err != http.ErrMissingFile {
+			c.Logger().Error("Failed to get picture from form file: ", err)
+			return c.JSON(http.StatusBadRequest, helper.ResponseFormat(http.StatusBadRequest, "Bad Request", nil))
+		} else if file != nil {
+			res_picture, err := helper.Upload(c, ec.config.Database.ACCESS_KEY_ID, ec.config.Database.ACCESS_KEY_SECRET)
+			if err != nil {
+				c.Logger().Error("Failed to upload picture: ", err)
+				return c.JSON(http.StatusInternalServerError, helper.ResponseFormat(http.StatusInternalServerError, "Internal Server Error", nil))
+			} 
+			picture = res_picture
+		}
 		
 		newBook := books.Core{
-			ID: id,
-			Title: input.Title,
+			ID:            id,
+			Title:         input.Title,
 			PublishedYear: input.PublishedYear,
-			ISBN: input.ISBN,
+			ISBN:          input.ISBN,
+			Image:         picture,
 	
 		}
 
@@ -248,9 +263,8 @@ func (ec *BookController) UpdateBook() echo.HandlerFunc {
 			c.Logger().Error("Failed to bind input from request body: ", err)
 			return c.JSON(http.StatusBadRequest, helper.ResponseFormat(http.StatusBadRequest, "Bad Request", nil))
 		}
-
-		file, err := c.FormFile("book")
 		var picture string
+		file, err := c.FormFile("book")
 		if err != nil && err != http.ErrMissingFile {
 			c.Logger().Error("Failed to get picture from form file: ", err)
 			return c.JSON(http.StatusBadRequest, helper.ResponseFormat(http.StatusBadRequest, "Bad Request", nil))
@@ -268,6 +282,7 @@ func (ec *BookController) UpdateBook() echo.HandlerFunc {
 			Title:         input.Title,
 			PublishedYear: input.PublishedYear,
 			ISBN:          input.ISBN,
+			Image:         picture,
 			
 		}
 

@@ -45,16 +45,16 @@ func (uc *UserController) Login() echo.HandlerFunc {
 
 				user, err := uc.s.Login(input.Email, input.Password)
 				if err != nil {
-						c.Logger().Error(err.Error())
+						c.Logger().Error(err)
 						return c.JSON(http.StatusInternalServerError, helper.ResponseFormat(http.StatusInternalServerError, "Internal Server Error", nil))
 				}
 
 				token, err := middleware.CreateJWT(user.ID,user.Email, user.Name)
 				if err != nil {
-						c.Logger().Error(err.Error())
+						c.Logger().Error(err)
 						return c.JSON(http.StatusInternalServerError, helper.ResponseFormat(http.StatusInternalServerError, "internal Server Error", nil ))
 				} 
-
+                
 				return c.JSON(http.StatusOK, helper.DataResponse{
 						Code: http.StatusOK,
 						Message: "Successful login, please use this token for further access.",

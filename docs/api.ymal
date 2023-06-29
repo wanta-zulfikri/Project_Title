@@ -1,0 +1,1055 @@
+// openapi: 3.0.3
+
+// info:
+// title: Book App RESTful API Project
+// version: 1.0.0
+// description: The Book App RESTful API Project is an application used for creating and managing bukalelang.
+// contact:
+// name: Developer 
+// email: wantazulfikri12@gmail.com
+
+// externalDocs:
+// description: Visit the Book-App GitHub repository for more information.
+// url: https://github.com/wanta-zulfikri/BukaLelang-App.git
+
+// servers:
+// # Added by API Auto Mocking Plugin
+// # Added by API Auto Mocking Plugin
+// # Added by API Auto Mocking Plugin
+// - description: SwaggerHub API Auto Mocking
+// url: https://virtserver.swaggerhub.com/wanta-zulfikri/BukaLelang-app/1.0.0
+// - description: SwaggerHub API Auto Mocking
+// url: https://virtserver.swaggerhub.com/wanta-zulfikri/Event-App/1.0.0
+// - description: SwaggerHub API Auto Mocking
+// url: https://virtserver.swaggerhub.com/wanta-zulfikri/BukaLelangAppRESTfulAPI/1.0.1
+// - description: Production
+// url: https://
+// - description: Demo
+// url: http://public_ip
+// - description: Testing
+// url: https://localhost:8080
+
+// paths:
+// /register:
+// post:
+// tags:
+// - Authentication
+// summary: Register user
+// description: Endpoint register new user to the database
+// requestBody:
+// $ref: '#/components/requestBodies/RequestRegisterUser'
+// responses:
+// '201':
+// $ref: '#/components/responses/Response201Register'  
+// '400':
+// $ref: '#/components/responses/Response400'
+// '500':
+// $ref: '#/components/responses/Response500'
+
+// /login:
+// post:
+// tags:
+// - Authentication
+// summary: Login user
+// description: Endpoint login user to the web-application
+// requestBody:
+// required: true
+// content:
+// application/json:
+// schema:
+// $ref: '#/components/schemas/UserLogin'
+// examples:
+// example1:
+// summary: Example login user id 1
+// value:
+// email: "peterzalai@gmail.com"
+// password: "@Secret123"
+// example2:
+// summary: Example login user id 2
+// value:
+// email: "satriowibowo@gmail.com"
+// password: "@Secret123"
+// responses:
+// '200':
+// $ref: '#/components/responses/Response200Login'
+// '400':
+// $ref: '#/components/responses/Response400'
+// '404':
+// $ref: '#/components/responses/Response404Login'
+// '500':
+// $ref: '#/components/responses/Response500'
+
+// /users:
+// get:
+// tags:
+// - Users
+// summary: Get user profile by ID
+// description: Get user information by their ID
+// responses:
+// '200':
+// $ref: '#/components/responses/Response200UserGet'
+// '400':
+// $ref: '#/components/responses/Response400'
+// '404':
+// $ref: '#/components/responses/Response404'
+// '500':
+// $ref: '#/components/responses/Response500'
+// security:
+// - bearerAuth : []
+
+// put:
+// tags:
+// - Users
+// summary: Update user profile by ID
+// description: Update user information by their ID
+// requestBody:
+// $ref: '#/components/requestBodies/RequestUpdateUser'
+// responses:
+// '200':
+// $ref: '#/components/responses/Response200UserUpdate'
+// '400':
+// $ref: '#/components/responses/Response400'
+// '401':
+// $ref: '#/components/responses/Response401'
+// '404':
+// $ref: '#/components/responses/Response404'
+// '500':
+// $ref: '#/components/responses/Response500'
+// security:
+// - bearerAuth : []
+
+// delete:
+// tags:
+// - Users
+// summary: Delete user profile by ID
+// description: Delete user information by their ID
+// responses:
+// '200':
+// $ref: '#/components/responses/Response200UserDelete'
+// '400':
+// $ref: '#/components/responses/Response400'
+// '401':
+// $ref: '#/components/responses/Response401'  
+// '404':
+// $ref: '#/components/responses/Response404'
+// '500':
+// $ref: '#/components/responses/Response500'
+// security:
+// - bearerAuth: []
+
+// /users/books:
+// get:
+// tags:
+// - Users
+// summary: Get list of lelangs owned by user ID
+// description: Get list of lelangs owned by userid on an user profile with pagination
+// parameters:
+// - in: query
+// name: page
+// schema:
+// type: integer
+// description: The page number to retrieve
+// required: false
+// responses:
+// '200':
+// $ref: '#/components/responses/Response200LelangListGet'
+// '400':
+// $ref: '#/components/responses/Response400'
+// '401':
+// $ref: '#/components/responses/Response401'
+// '404':
+// $ref: '#/components/responses/Response404'
+// '500':
+// $ref: '#/components/responses/Response500'
+// security: 
+// - bearerAuth: []
+
+// /users/history:
+// get:
+// tags:
+// - Users
+// summary: Get list of lelangs history by user ID
+// description: Get list of events attended by userid on an user profile with pagination
+// parameters:
+// - in: query
+// name: page
+// schema:
+// type: integer
+// description: The page number to retrieve
+// required: false
+// responses:
+// '200':
+// $ref: '#/components/responses/Response200LelangListGet'
+// '400':
+// $ref: '#/components/responses/Response400'
+// '401':
+// $ref: '#/components/responses/Response401'
+// '404':
+// $ref: '#/components/responses/Response404'
+// '500':
+// $ref: '#/components/responses/Response500'
+// security: 
+// - bearerAuth: []
+
+// /book:
+// get:
+// tags:
+// - Book
+// summary: Get list books with pagination
+// description: Get list of lelang on the database
+// parameters:
+// - in: query
+// name: category
+// schema:
+// type: string
+// description: The string value of category to retrieve spesific list of category lelang
+// required: false
+// - in: query
+// name: page
+// schema:
+// type: integer
+// description: The page number to retrieve
+// required: false
+// responses:
+// '200':
+// $ref: '#/components/responses/Response200BookListGet'
+// '400':
+// $ref: '#/components/responses/Response400'
+// '401':
+// $ref: '#/components/responses/Response401'
+// '404':
+// $ref: '#/components/responses/Response404'
+// '500':
+// $ref: '#/components/responses/Response500'
+
+// post:
+// tags:
+// - Book
+// summary: Create a new book 
+// description: Endpoint create a new book web
+// requestBody:
+// required: true
+// content:
+// application/json:
+// schema:
+// $ref: "#/components/schemas/BookCreate"
+// responses:
+// '201':
+// $ref: '#/components/responses/Response201BookCreate'
+// '400':
+// $ref: '#/components/responses/Response400'
+// '401':
+// $ref: '#/components/responses/Response401'
+// '500':
+// $ref: '#/components/responses/Response500'
+// security:
+// - bearerAuth: []
+
+// /book/{id}:
+// get:
+// tags:
+// - Book
+// summary: Get an lelang by ID include its & history
+// description: Get an event by their ID include its & history  on the database
+// parameters:
+// - name: id
+// in: path
+// description: Book ID
+// required: true
+// schema:
+// type: integer
+// responses:
+// '200':
+// $ref: '#/components/responses/Response200BookGet'
+// '400':
+// $ref: '#/components/responses/Response400'
+// '401':
+// $ref: '#/components/responses/Response401'
+// '404':
+// $ref: '#/components/responses/Response404'
+// '500':
+// $ref: '#/components/responses/Response500'
+
+// put: 
+// tags: 
+// - Book
+// summary: Update an book by ID 
+// security: 
+// - bearerAuth: [] 
+// parameters:
+// - name: id
+// in: path
+// description: Book ID
+// required: true
+// schema:
+// type: integer
+// requestBody: 
+// description: The updated book 
+// required: true 
+// content: 
+// multipart/form-data: 
+// schema:
+// $ref: "#/components/schemas/BookUpdate" 
+// responses: 
+// '200': 
+// $ref: "#/components/responses/Response200BookUpdate" 
+// '400': 
+// $ref: "#/components/responses/Response400"
+// '401':
+// $ref: "#/components/responses/Response401"
+// '404': 
+// description: book not found 
+// content: 
+// application/json: 
+// schema: 
+// type: object 
+// properties: 
+// message: 
+// type: string 
+// example: 
+// message: "book not found" 
+// '500': 
+// $ref: "#/components/responses/Response500"
+
+// delete:
+// tags:
+// - Book
+// summary: Delete an book by ID
+// description: Delete book information by book ID
+// parameters:
+// - name: id
+// in: path
+// description: Lelang ID
+// required: true
+// schema:
+// type: integer
+// responses:
+// '200': 
+// description: Success deleting lelang  
+// content: 
+// application/json: 
+// schema: 
+// type: object
+// properties:
+// code:
+// type: integer
+// example: 200
+// message:
+// type: string
+// example: "Success deleted an book"
+// '400':
+// $ref: '#/components/responses/Response400'
+// '401':
+// $ref: '#/components/responses/Response401'  
+// '404':
+// $ref: '#/components/responses/Response404'
+// '500':
+// $ref: '#/components/responses/Response500'
+// security:
+// - bearerAuth: []
+
+
+
+// components: 
+// securitySchemes:  
+// bearerAuth:           
+// type: http
+// scheme: bearer
+// bearerFormat: JWT
+// description: "Token obtained upon successful login"
+
+// requestBodies: 
+// RequestRegisterUser:
+// required: true
+// content:
+// application/json:
+// schema:
+// $ref: '#/components/schemas/UserRegister'
+
+// RequestLoginUser:
+// required: true
+// content:
+// multipart/form-data:
+// schema:
+// $ref: '#/components/schemas/UserLogin' 
+
+// RequestUpdateUser:
+// required: true
+// content:
+// multipart/form-data:
+// schema:
+// $ref: '#/components/schemas/UserUpdate'
+
+// responses:
+// ResponsesBookListGet:
+// description: Successful operation
+// content:
+// application/json:
+// schema:
+// type: object
+// properties:
+// code:
+// type: integer
+// example: 200
+// message:
+// type: string
+// example: "Successful operation"
+
+// Response201:
+// description: Successful operation
+// content:
+// application/json:
+// schema:
+// type: object
+// properties:
+// code:
+// type: integer
+// example: 201
+// message:
+// type: string
+// example: "Successful operation"
+
+// Response201Register:
+// description: Successful registration
+// content:
+// application/json:
+// schema:
+// type: object
+// properties:
+// code:
+// type: integer
+// example: 201
+// message:
+// type: string
+// example: "Success Created an Account"
+
+// Response200Login:
+// description: Successful login
+// content:
+// application/json:
+// schema:
+// type: object
+// properties:
+// code:
+// type: integer
+// message:
+// type: string
+// token:
+// type: string
+// example: 
+// code: 200
+// message: "Successful login, please use this token for further access."
+// data:
+// token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBldGVyemFsYWlAZ21haWwuY29tIiwicGFzc3dvcmQiOiJAU2VjcmV0MTIzIn0.BZq48TAx5wci2LH48KW5geslrGR2ybr0-5Wol-HyDkI"
+// examples:
+// Example login user id 1:
+// value:
+// code: 200
+// message: "Successful login, please use this token for further access."
+// data:
+// token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBldGVyemFsYWlAZ21haWwuY29tIiwicGFzc3dvcmQiOiJAU2VjcmV0MTIzIn0.BZq48TAx5wci2LH48KW5geslrGR2ybr0-5Wol-HyDkI"
+// Example login user id 2:
+// value:
+// code: 200
+// message: "Successful login, please use this token for further access."
+// data:
+// token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG5ib2FzdEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiRzYW1wbGUxMjMifQ.1Tq3XNnmNcv_cFZ0YdBUV8juv0x26bV7jK00aUOQ6U0"
+
+// Response200UserGet:    
+// description: Get user profile information
+// content:
+// application/json:
+// schema:
+// $ref: '#/components/schemas/User'
+// examples:
+// example 1:
+// summary: Example user id 1
+// value:
+// code: 200
+// message: "Successful Operation"
+// data:
+// username: "peterzalai"
+// email: "peterzalai@gmail.com"
+// phone: "+6281235288543"
+// password: "@Secret123"
+// image: "peterzalai.png"
+// example 2:
+  //                 summary: Example user id 2
+  //                 value:
+  //                   code: 200
+  //                   message: "Successful Operation"
+  //                   data:
+  //                     username: "satriowibowo"
+  //                     email: "satriowibowo@gmail.com"
+  //                     phone: "+6281235288543"
+  //                     password: "@Secret123"
+  //                     image: "satriowibowo.png"
+  //               example 3:
+  //                 summary: Example user id 3
+  //                 value:
+  //                   code: 200
+  //                   message: "Successful Operation"
+  //                   data:
+  //                     username: "wantazulfikri"
+  //                     email: "wantazulfikri@gmail.com"
+  //                     phone: "+6281235288543"
+  //                     password: "@Secret123"
+  //                     image: "wantazulfikri.png"
+    
+  //   Response200UserUpdate:
+  //       description: User information updated successfully
+  //       content:
+  //         application/json:
+  //           schema:
+  //             $ref: '#/components/schemas/User'
+  //           examples:
+  //             example update 1:
+  //               summary: Example update user id 1
+  //               value:
+  //                 code: 200
+  //                 message: "Success Updated an Account"
+  //             example update 2:
+  //               summary: Example update user id 3
+  //               value:
+  //                 code: 200
+  //                 message: "Success Updated an Account"
+    
+  //   Response200UserDelete:
+  //       description: User information deleted successfully
+  //       content:
+  //         application/json:
+  //           schema:
+  //             type: object
+  //             properties:
+  //               code:
+  //                 type: integer
+  //                 example: 200
+  //               message:
+  //                 type: string
+  //                 example: "Success Deleted an Account"
+
+  //   Response200BookGet:
+  //         description: Get book information by their ID include with its history
+  //         content:
+  //           application/json:
+  //             schema:
+  //               $ref: '#/components/schemas/Book'
+    
+  //   Response200BookListGet:
+  //     description: Get list of books with pagination
+  //     content:
+  //       application/json:
+  //         schema:
+  //           type: object
+  //           properties:
+  //             code:
+  //               type: integer
+  //               example: 200
+  //             message:
+  //               type: string
+  //               example: "Successful Operation"
+  //             lelangs:
+  //               type: array
+  //               items:
+  //                 $ref: '#/components/schemas/BookList'
+  //             pagination:
+  //               $ref: '#/components/schemas/Pagination'
+  //           example:
+  //             code: 200
+  //             message: "Successful Operation"
+  //             data:
+  //               - lelang_id: 1
+  //                 item: "lukisan monalisa"
+  //                 deskripsi: "lukisan monalisa"
+  //                 price: "2000000"
+  //                 penjual: "zalai"
+  //                 date: "2024-24-12"
+  //                 status: "open"
+  //                 time: "20:00"
+  //                 image: "monalisa.jpg"
+  //               - lelang_id: 2
+  //                 item: "buku monolog Tan malaka"
+  //                 deskripsi: "buku perjuangan Tan malaka melawan penjajahan"
+  //                 price: "200000"
+  //                 penjual: "satrio"
+  //                 date: "2024-12-12"
+  //                 status: "open"
+  //                 time: "20:00"
+  //                 image: "monolog.jpg" 
+  //               - lelang_id: 3
+  //                 item: "mobil mercy"
+  //                 deskripsi: "mobil mercy tahun 1945"
+  //                 price: "200000"
+  //                 penjual: "satrio"
+  //                 date: "2024-12-12"
+  //                 status: "open"
+  //                 time: "20:00"
+  //                 image: "monolog.jpg"
+  //             pagination:
+  //               page: 1
+  //               per_page: 3
+  //               total_pages: 5
+  //               total_items: 12
+
+  //   Response200BookUpdate:
+  //     description: Successful response for updating an lelang
+  //     content:
+  //       application/json:
+  //         schema:
+  //           $ref: '#/components/schemas/Lelang'
+
+
+  //   Response201BookCreate:
+  //     description: Successful Create an Lelang
+  //     content:
+  //       application/json:
+  //         schema:
+  //           $ref: '#/components/schemas/ResponseLelangCreate'
+
+   
+  //   Response201HistoryCreate:
+  //     description: Create a history successfully
+  //     content:
+  //       application/json:
+  //         schema:
+  //           type: object
+  //           properties:
+  //             code:
+  //               type: integer
+  //               example: 201
+  //             message:
+  //               type: string
+  //               example: "Success Created a History"
+
+  //   Response200HistoryEdit:
+  //     description: Update a  successfully
+  //     content:
+  //       application/json:
+  //         schema:
+  //           type: object
+  //           properties:
+  //             code:
+  //               type: integer
+  //               example: 200
+  //             message:
+  //               type: string
+  //               example: "Success Updated a Review"
+
+  //   Response400:
+  //     description: Bad request
+  //     content:
+  //       application/json:
+  //         schema:
+  //           type: object
+  //           properties:
+  //             code:
+  //               type: integer
+  //               example: 400
+  //             message:
+  //               type: string
+  //               example: "Bad Request"
+
+  //   Response401:
+  //     description: Access token is missing or invalid
+  //     content:
+  //       application/json:
+  //         schema:
+  //           type: object
+  //           properties:
+  //             code:
+  //               type: number                
+  //             message:
+  //               type: string                
+  //             data:
+  //               type: string
+  //           example:
+  //             code: 401
+  //             message: "Missing or Malformed JWT"
+
+  //   Response404:
+  //     description: Not Found
+  //     content:
+  //       application/json:
+  //         schema:
+  //           type: object
+  //           properties:
+  //             code:
+  //               type: integer
+  //               example: 404
+  //             message:
+  //               type: string
+  //               example: "The requested resource was not found."
+
+  //   Response404Login:
+  //     description: Not Found
+  //     content:
+  //       application/json:
+  //         schema:
+  //           type: object
+  //           properties:
+  //             code:
+  //               type: integer
+  //               example: 404
+  //             message:
+  //               type: string
+  //               example: "The requested resource was not found. Please check your email and password input."
+
+  //   Response500:
+  //     description: Internal server error
+  //     content:
+  //       application/json:
+  //         schema:
+  //           type: object
+  //           properties:
+  //             code:
+  //               type: integer
+  //               example: 500
+  //             message:
+  //               type: string
+  //               example: "Internal Server Error"
+
+  // schemas:
+  //   UserRegister:
+  //     type: object
+  //     properties:
+  //       username:
+  //         type: string
+  //       email:
+  //         type: string
+  //         format: email
+  //       phone:
+  //         type: string
+  //         format: phone
+  //       password:
+  //         type: string
+  //         format: password
+  //       image:
+  //         type: string
+  //         format: binary
+  //     example:
+  //       username: "peterzalai"
+  //       email: "peterzalai@gmail.com"
+  //       phone: "+6281235288543"
+  //       password: "@Secret123"
+  //       image: "https://peterzalai.jpg"
+    
+  //   UserLogin:
+  //     type: object
+  //     properties:
+  //       email:
+  //         type: string
+  //         format: email
+  //       password:
+  //         type: string
+  //         format: password
+  //     example:
+  //       email: "peterzalai@gmail.com"
+  //       password: "@Secret123"
+    
+  //   User:
+  //     type: object
+  //     properties:
+  //       name:
+  //         type: string
+  //       username:
+  //         type: string
+  //       email:
+  //         type: string
+  //         format: email
+  //       phone:
+  //         type: string
+  //       address:
+  //         type: string
+  //       password:
+  //         type: string
+  //         format: password
+  //       image:
+  //         type: string
+  //         format: binary
+  //     example:
+  //       name: "Peter Zalai"
+  //       username: "peterzalai"
+  //       email: "peterzalai@gmail.com"
+  //       phone: "+6281235288543"
+  //       address: "Denpasar, Bali"
+  //       image: "peterzalai.png"
+    
+  //   UserUpdate:
+  //     type: object
+  //     properties:
+  //       username:
+  //         type: string
+  //       email:
+  //         type: string
+  //         format: email
+  //       phone:
+  //         type: string
+  //         format: phone
+  //       password:
+  //         type: string
+  //         format: password
+  //       image:
+  //         type: string
+  //         format: binary
+  //     example:
+  //       username: "peterzalai"
+  //       email: "peterzalai@gmail.com"
+  //       phone: "+6281235288543"
+  //       paswword: "@Secret123"
+  //       image: "peterzalai.png"
+
+  //   Book:
+  //     type: object 
+  //     properties: 
+  //       book_id: 
+  //         type: integer
+  //         description: Book ID 
+  //       item: 
+  //         type: string  
+  //         description: Item of the book 
+  //       description: 
+  //         type: string 
+  //         description: Details of the book
+  //       price: 
+  //         type: integer
+  //         description: Price of the lelang
+  //       seller: 
+  //         type: string 
+  //         description: Name of the lelang seller 
+  //       date: 
+  //         type: string 
+  //         format: date-time 
+  //         description: Date of the event in ISO format (YYYY-MM-DD)
+  //       time: 
+  //         type: string 
+  //         format: time 
+  //         description: Time of the event in 24-hour format (HH:MM:SS)
+  //       status:
+  //         type: string
+  //         description: Status of the event, open or closed
+  //       image: 
+  //         type: string 
+  //         format: binary
+  //         description: Image of the event 
+  //       username:
+  //         type: string
+  //       user_picture:
+  //         type: string
+  //         format: binary
+  //         description: Image of the user
+  //       history:
+  //         type: string
+  //     example:
+  //       code: 200
+  //       message: "Successful Operation"
+  //       data: 
+  //         event_id: 1
+  //         item: "lukisan monalisa"
+  //         deskripsi: "lukisan monalisa"
+  //         price: "2000000"
+  //         penjual: "zalai"
+  //         date: "2024-24-12"
+  //         status: "open"
+  //         time: "20:00"
+  //         image: "monalisa.jpg"
+  //         attendances:
+  //         - username: "peterzalai"
+  //           user_picture: "peterzalai.png"
+  //         - username: "AzhariAziz"
+  //           user_picture: "AzhariAziz.png"
+  //         - username: "ropel"
+  //           user_picture: "ropel.png"
+  //         - username: "wanta"
+  //           user_picture: "wanta.png"
+  //         history:
+  //         - username: "peterzalai"
+  //           user_picture: "peterzalai.png"
+  //           review: "Great!"
+  //         - username: "ropel"
+  //           user_picture: "ropel.png"
+  //           review: "Superb!"
+
+  //   BookList:
+  //     type: object
+  //     properties: 
+  //       lelang_id: 
+  //         type: integer
+  //         description: Book ID 
+  //       item: 
+  //         type: string  
+  //         description: Item name book
+  //       description: 
+  //         type: string 
+  //         description: description Item book
+  //       seller:
+  //         type: string 
+  //         description: Seller Item book
+  //       date: 
+  //         type: string 
+  //         description: date lelang  
+  //       time: 
+  //         type: string 
+  //         format: time lelang
+  //         description: Time of the lelang in 24-hour format (HH:MM:SS)
+  //       status:
+  //         type: string
+  //         description: Status of the lelang, open or closed
+  //       image: 
+  //         type: string 
+  //         format: binary
+    
+  //   Pagination:
+  //     type: object
+  //     properties:
+  //       page:
+  //         type: integer
+  //         description: The current page number.
+  //       per_page:
+  //         type: integer
+  //         description: The number of items per page.
+  //       total_pages:
+  //         type: integer
+  //         description: The total number of pages.
+  //       total_items:
+  //         type: integer
+  //         description: The total number of items.
+
+  //   BookCreate:
+  //     type: object 
+  //     properties: 
+  //       lelang_id: 
+  //         type: integer
+  //         description: Lelang ID 
+  //       item: 
+  //         type: string  
+  //         description: Item name lelang 
+  //       description: 
+  //         type: string 
+  //         description: description Item lelang
+  //       seller:
+  //         type: string 
+  //         description: Seller Item lelang
+  //       date: 
+  //         type: string 
+  //         description: date lelang  
+  //       time: 
+  //         type: string 
+  //         format: time lelang
+  //         description: Time of the lelang in 24-hour format (HH:MM:SS)
+  //       status:
+  //         type: string
+  //         description: Status of the lelang, open or closed
+  //       image: 
+  //         type: string 
+  //         format: binary
+  //       bid_price:
+  //         type: integer
+  //         description: Price Item Auction
+  //       bid_buyer:
+  //         type: string
+  //         description: Name buyer item auction
+  //       bid_quantity:
+  //         type: integer
+  //         description: Quantity of the bid available
+  //     example: 
+  //         event_id: 1
+  //         item: "lukisan monalisa"
+  //         deskripsi: "lukisan monalisa"
+  //         price: "2000000"
+  //         penjual: "zalai"
+  //         date: "2024-24-12"
+  //         status: "open"
+  //         time: "20:00"
+  //         image: "monalisa.jpg"
+  //         bid:
+  //         - bid_price: 80000000
+  //           bid_buyer: "peter"
+  //           bid_quantity: 1
+  //         - bid_price: 9000000
+  //           bid_buyer: "zalai"
+  //           bid_quantity: 1
+
+  //   ResponseBookCreate:
+  //     type: object 
+  //     properties: 
+  //       book_id: 
+  //         type: integer
+  //         description: Book ID 
+  //       item: 
+  //         type: string  
+  //         description: Item name book 
+  //       description: 
+  //         type: string 
+  //         description: description Item book
+  //       seller:
+  //         type: string 
+  //         description: Seller Item book
+  //       date: 
+  //         type: string 
+  //         description: date book
+  //       time: 
+  //         type: string 
+  //         format: time book
+  //         description: Time of the book in 24-hour format (HH:MM:SS)
+  //       status:
+  //         type: string
+  //         description: Status of the book, open or closed
+  //       image: 
+  //         type: string 
+  //         format: binary
+  //     example: 
+  //       code: 201
+  //       message: "Success created an event"
+  //       data:
+  //         event_id: 1
+  //         item: "lukisan monalisa"
+  //         deskripsi: "lukisan monalisa"
+  //         price: "2000000"
+  //         penjual: "zalai"
+  //         date: "2024-24-12"
+  //         status: "open"
+  //         time: "20:00"
+  //         image: "monalisa.jpg"
+
+  //   BookUpdate:
+  //     type: object 
+  //     properties: 
+  //       lelang_id: 
+  //         type: integer
+  //         description: Lelang ID 
+  //       item: 
+  //         type: string  
+  //         description: Item name lelang 
+  //       description: 
+  //         type: string 
+  //         description: description Item lelang
+  //       seller:
+  //         type: string 
+  //         description: Seller Item lelang
+  //       date: 
+  //         type: string 
+  //         description: date lelang  
+  //       time: 
+  //         type: string 
+  //         format: time lelang
+  //         description: Time of the lelang in 24-hour format (HH:MM:SS)
+  //       status:
+  //         type: string
+  //         description: Status of the lelang, open or closed
+  //       image: 
+  //         type: string 
+  //         format: binary
+  //         description: Image of the event 
+  //     example: 
+  //       code: 200
+  //       message: "Success updated an event"
+  //       data:
+  //         event_id: 1
+  //         item: "kris majapahit"
+  //         deskripsi: "kris pusaka peninggalan kerajaan majapahit"
+  //         price: "3000000000"
+  //         penjual: "peter"
+  //         date: "2024-24-12"
+  //         status: "close"
+  //         time: "20:00"
+          // image: "kris.jpg"

@@ -7,6 +7,7 @@ type Book struct {
 	Title         string
 	PublishedYear string
 	ISBN          string
+	Image         string 
 	Users         []User `gorm:"many2many:book_authors"`
 }
 

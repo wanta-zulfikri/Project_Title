@@ -39,8 +39,8 @@ func (es *BooksService) GetBooksByUserID(userid uint) ([]books.Core, error) {
 	return lelangs, nil
 } 
 
-func (es *BooksService) GetBook(lelangid uint) (books.Core, error) {
-	book, err := es.r.GetBook(lelangid)
+func (es *BooksService) GetBook(bookid uint) (books.Core, error) {
+	book, err := es.r.GetBook(bookid)
 	if err != nil {
 		return books.Core{}, err
 	}

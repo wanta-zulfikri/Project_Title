@@ -1,25 +1,30 @@
 package middleware
 
 import (
-	"fmt"
-	"strings"
-	"time"
 	"Project_Title/config"
+	"fmt"
+	"log"
+	"strings"
+	"time" 
+	
+
 	"github.com/golang-jwt/jwt/v4"
 ) 
 
 func CreateJWT(id uint, email, name string) (string, error) {
 	expirationTime := time.Now().Add(24 * time.Hour)
 	claims := &jwt.MapClaims{
-			"exp"     :        expirationTime.Unix(),
-			"id"      :        id, 
-			"email"   :        email,
-			"name"    :        name,
+		"exp"     :        expirationTime.Unix(),
+		"id"      :        id, 
+		"email"   :        email,
+		"name"    :        name,
 	}
-	token := jwt.NewWithClaims(jwt.SigningMethodES256, claims) 
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims) 
 	signedToken, err := token.SignedString([]byte(config.JWTKey))
 	if err != nil {
+			log.Println(err, "jwt")
 			return "", err 
+			
 	}
 	return signedToken, nil
 }
